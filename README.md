@@ -34,6 +34,8 @@ Configure Jenkins and Jenkins Job:
   - Build Triggers > Poll SCM check 
 - Press 'Build Now'
 
-
+ ````bash
+./4startDockerRegistry.sh
+````
 
 
