@@ -2,7 +2,7 @@
 My playground for setting up a continuous delivery pipeline.
 
 - Jenkins (started in a Docker container)
-- GitLab (stared in a Docker container)
+- GitLab (started in a Docker container)
 - Using a simple Dropwizard microservice as an example application
 - Using a Docker image (containing the microservice) to create reproducible environments for all stages of the continuous delivery pipeline.
 
