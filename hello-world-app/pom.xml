@@ -6,6 +6,9 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<properties>
 		<dropwizard.version>0.8.0</dropwizard.version>
+		<prozu.port>8080</prozu.port>
+		<prozu.port.admin>8081</prozu.port.admin>
+		<docker.username>phauer</docker.username>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -60,7 +63,7 @@
 									implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>de.itemis.prozu.HelloWorldApplication</mainClass>
+									<mainClass>de.philipphauer.helloworld.HelloWorldApplication</mainClass>
 								</transformer>
 							</transformers>
 						</configuration>
@@ -77,6 +80,87 @@
 							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
 						</manifest>
 					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jolokia</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.13.3</version>
+				<configuration>
+					<images>
+						<image>
+							<alias>${project.artifactId}</alias>
+							<name>${docker.username}/${project.artifactId}:${project.version}</name>
+							<build>
+								<from>java:8-jre</from>
+								<maintainer>${docker.username}</maintainer>
+								<assembly>
+									<descriptor>docker-assembly.xml</descriptor>
+								</assembly>
+								<ports>
+									<port>8080</port>
+									<port>8081</port>
+								</ports>
+								<cmd>
+									<shell>java -jar \
+										/maven/${project.build.finalName}.jar server \
+										/maven/config.yml</shell>
+								</cmd>
+							</build>
+							<run>
+								<namingStrategy>alias</namingStrategy>
+								<ports>
+									<port>${prozu.port}:8080</port>
+									<port>${prozu.port.admin}:8081</port>
+								</ports>
+								<volumes>
+									<bind>
+										<volume>${user.home}/logs:/logs</volume>
+									</bind>
+								</volumes>
+								<wait>
+									<url>http://${docker.host.address}:${prozu.port.admin}/ping</url>
+									<time>10000</time>
+								</wait>
+								<log>
+									<prefix>${project.artifactId}</prefix>
+									<color>cyan</color>
+								</log>
+							</run>
+						</image>
+					</images>
+				</configuration>
+				<executions>
+					<execution>
+						<id>start</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>build</goal>
+							<goal>start</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>stop</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>push-to-docker-hub</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>push</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.7</version>
+				<configuration>
+					<skip>true</skip><!-- we push the container instead -->
 				</configuration>
 			</plugin>
 		</plugins>

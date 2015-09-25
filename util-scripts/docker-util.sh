@@ -15,12 +15,11 @@ docker-rmi-none() {
 }
 docker-go() {
 	docker run --rm -t -i $@
-}	
+}
 # append bash in a running container
 docker-exec-bash(){
 	if [ $# -lt 1 ] ; then
-	  echo "Please provide a container id" 
-	  echo "Usage: docker-exec-bash <containerId>"
+	  echo "Please provide a container id or name. Usage: docker-exec-bash <containerIdOrName>"
 	else
 		docker exec -it $1 bash
 	fi
