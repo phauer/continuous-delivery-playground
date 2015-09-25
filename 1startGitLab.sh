@@ -25,4 +25,4 @@ docker run --name gitlab -d \
 sameersbn/gitlab:7.14.3
 
 echo "NOTE: Please allow a couple of minutes for the GitLab application to start."
-echo "Port: 10080. user: root. default pw: 5iveL!fe changed to 12345678"
+echo "Port: 10080. user: root. default pw: 5iveL!fe or changed to 12345678"
