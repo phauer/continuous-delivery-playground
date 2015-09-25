@@ -5,14 +5,19 @@
 echo "precondition: create project 'hello-world-app' in gitlab"
 echo "The default user is 'root' and the pw is shown above"
 
-TARGETFOLDER=~/Development/
-TARGETPATH=$TARGETFOLDER/hello-world-app
+PROJECTNAME=hello-world-app
+TARGETFOLDER=~/Development
+TARGETPATH=$TARGETFOLDER/$PROJECTNAME
 
-rm -rf $TARGETPATH
+rm -fr $TARGETPATH
 
 git clone http://localhost:10080/root/hello-world-app.git $TARGETPATH
 
-unzip hello-world-app.zip -d $TARGETFOLDER	
+cp -r $PROJECTNAME $TARGETFOLDER
+rm -fr $TARGETPATH/target
+rm -fr $TARGETPATH/.settings
+rm -fr $TARGETPATH/.classpath
+rm -fr $TARGETPATH/.project
 
 cd $TARGETPATH
 git add .
