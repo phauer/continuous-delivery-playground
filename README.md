@@ -7,6 +7,8 @@ My playground for setting up a continuous delivery pipeline with Docker.
 - Using a Docker image (containing the microservice) to create reproducible environments for all stages of the continuous delivery pipeline.
 
 # Getting started
+First of all, you need the IP of your host machine (like 192.168.35.217). Therefore, run 'ip route' on your host system to get the ip of the host machine. Look for the IP after the "src" keyword. You can test the IP by trying to access a URL within a container by running 'docker-exec-bash <containerId>' (getting bash inside the container) and  then 'ping \<IpOfHostMachine\>'
+
 ````bash
 ./1startGitLab.sh
 ````
@@ -32,7 +34,6 @@ Configure Jenkins and Jenkins Job:
   - open Jenkins on http://localhost:8090/configure and install Maven and JDK if not already done.
   - Install the "GIT Plugin" on http://localhost:8090/pluginManager/available if not already done.
 - Create Maven Job 'hello-world-app' and configure it as follows:
-  - Getting the ip of the host machine: run 'ip route' on your host system to get the ip of the host machine. Look for the IP after the "src" keyword. You can try if you can access a URL within the jenkins container by using 'docker-exec-bash jenkins' (getting bash inside the container) and  then 'curl <url>'
   - Configure the git repository in the job: 'http://\<IpOfHostMachine\>:10080/root/hello-world-app.git'. Also configure your GitLab credentials here.
   - Build > Goals and options: deploy -Ddocker.registry.name=http://\<IpOfHostMachine\>:5000/
   - Build Triggers > Poll SCM check 
