@@ -8,8 +8,8 @@
 		<dropwizard.version>0.8.0</dropwizard.version>
 		<prozu.port>8080</prozu.port>
 		<prozu.port.admin>8081</prozu.port.admin>
-		<docker.registry>localhost:5000</docker.registry>
-		<docker.repository.name>${docker.registry}/${project.artifactId}</docker.repository.name>
+		<docker.registry>localhost:5000/</docker.registry><!-- leave empty for docker hub -->
+		<docker.repository.name>${docker.registry}${project.artifactId}</docker.repository.name>
 	</properties>
 	<dependencies>
 		<dependency>
