@@ -1,5 +1,8 @@
 #! /bin/bash
 # add 'source <pathToThisFile>/docker-util.sh' to ~/.bashrc. This makes this functions available in the current shell.
+docker-stop-remove(){
+	docker stop $1 && docker rm $1		
+}
 docker-remove-stopped(){
 	#docker rm $(docker ps -a -q)
 	docker ps -a -q | xargs docker rm

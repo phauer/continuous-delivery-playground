@@ -8,7 +8,8 @@
 		<dropwizard.version>0.8.0</dropwizard.version>
 		<prozu.port>8080</prozu.port>
 		<prozu.port.admin>8081</prozu.port.admin>
-		<docker.username>phauer</docker.username>
+		<docker.registry>localhost:5000</docker.registry>
+		<docker.repository.name>${docker.registry}/${project.artifactId}</docker.repository.name>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -90,10 +91,10 @@
 					<images>
 						<image>
 							<alias>${project.artifactId}</alias>
-							<name>${docker.username}/${project.artifactId}:${project.version}</name>
+							<name>${docker.repository.name}:${project.version}</name>
 							<build>
 								<from>java:8-jre</from>
-								<maintainer>${docker.username}</maintainer>
+								<maintainer>phauer</maintainer>
 								<assembly>
 									<descriptor>docker-assembly.xml</descriptor>
 								</assembly>
