@@ -120,7 +120,7 @@
 									</bind>
 								</volumes>
 								<wait>
-									<url>http://${docker.host.address}:${prozu.port.admin}/ping</url>
+									<log>org.eclipse.jetty.server.Server: Started</log>
 									<time>10000</time>
 								</wait>
 								<log>
