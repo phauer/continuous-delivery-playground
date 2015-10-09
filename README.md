@@ -36,7 +36,7 @@ Configure Jenkins and Jenkins Job:
   - Install the "GIT Plugin" on http://localhost:8090/pluginManager/available if not already done.
 - Create Maven Job 'hello-world-app' and configure it as follows:
   - Configure the git repository in the job: 'http://\<IpOfHostMachine\>:10080/root/hello-world-app.git'. Also configure your GitLab credentials here.
-  - Build > Goals and options: "deploy -Ddocker.registry.name=http://\<IpOfHostMachine\>:5000/"
+  - Build > Goals and options: "deploy -Ddocker.registry.name=\<IpOfHostMachine\>:5000/"
   - Build Triggers > Poll SCM check 
 - Press 'Build Now'
   - After the build has finished, you should find the created image in your local docker registry. Verify this by calling http://localhost:5000/v2/_catalog in your browser or take a look into the ~/docker-registry-data folder. 
