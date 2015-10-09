@@ -19,6 +19,9 @@ docker-rmi-none() {
 docker-go() {
 	docker run --rm -t -i $@
 }
+docker-go-bg() {
+	docker run -d --name $@ $@
+}
 # append bash in a running container
 docker-exec-bash(){
 	if [ $# -lt 1 ] ; then

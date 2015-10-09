@@ -39,6 +39,6 @@ Configure Jenkins and Jenkins Job:
   - Build > Goals and options: "deploy -Ddocker.registry.name=http://\<IpOfHostMachine\>:5000/"
   - Build Triggers > Poll SCM check 
 - Press 'Build Now'
-  - After the build has finished, you should find the created image in your local docker registry. Verify this by calling http://localhost:5000/v2/_catalog in your browser or take look into the ~/docker-registry-data folder. 
+  - After the build has finished, you should find the created image in your local docker registry. Verify this by calling http://localhost:5000/v2/_catalog in your browser or take a look into the ~/docker-registry-data folder. 
 
 After a commit, Jenkins should build an image with the hello-world-app and pushed the image to your local docker registry. You should see the image when .
