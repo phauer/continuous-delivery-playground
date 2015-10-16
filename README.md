@@ -26,6 +26,9 @@ Configure GitLab Project
 ./3startDockerRegistry.sh
 ````
 
+Configure the docker daemon to use an unsecure connection for accessing our local docker registry.
+- add " --insecure-registry \<IpOfHostMachine\>:5000" to the DOCKER_OPS in /etc/default/docker.
+
 ````bash
 mkdir ~/jenkins_home
 ./4startJenkins.sh
