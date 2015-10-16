@@ -120,7 +120,7 @@
 									</bind>
 								</volumes>
 								<wait>
-									<log>org.eclipse.jetty.server.Server: Started</log>
+									<log>org.eclipse.jetty.server.Server: Started @</log>
 									<time>10000</time>
 								</wait>
 								<log>
@@ -148,7 +148,7 @@
 						</goals>
 					</execution>
 					<execution>
-						<id>push-to-docker-hub</id>
+						<id>push-to-docker-registry</id>
 						<phase>deploy</phase>
 						<goals>
 							<goal>push</goal>
