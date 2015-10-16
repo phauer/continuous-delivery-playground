@@ -3,6 +3,8 @@ JENKINS_PORT=8090
 JENKINS_CONTAINER_NAME=jenkins
 JENKINS_HOME=~/jenkins_home
 
+mkdir $JENKINS_HOME
+
 JenkinsContainerId=`docker ps -qa --filter "name=$JENKINS_CONTAINER_NAME"`
 if [ -n "$JenkinsContainerId" ]
 then

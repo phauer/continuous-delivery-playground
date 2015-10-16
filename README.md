@@ -33,7 +33,6 @@ Configure the docker daemon to use an unsecure connection for accessing our loca
 - add " --insecure-registry \<IpOfHostMachine\>:5000" to the DOCKER_OPS in /etc/default/docker.
 
 ````bash
-mkdir ~/jenkins_home
 ./4startJenkins.sh
 ````
 Configure Jenkins and Jenkins Job:
