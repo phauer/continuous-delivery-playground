@@ -9,6 +9,8 @@ My playground for setting up a continuous delivery pipeline with Docker.
 # Getting started
 First of all, you need the IP of your host machine (like 192.168.35.217). Therefore, run 'ip route' on your host system to get the ip of the host machine. Look for the IP after the "src" keyword. You can test the IP by trying to ping the IP within a container by running 'docker-exec-bash <containerId>' (getting bash inside the container) and  then 'ping \<IpOfHostMachine\>'
 
+## The Commit Stage
+
 ````bash
 ./1startGitLab.sh
 ````
@@ -17,6 +19,7 @@ Configure GitLab Project
 - Open GitLab on  localhost:10080, login as root (password: 5iveL!fe), change password to 12345678
 - create project 'hello-world-app'.
 - go to http://localhost:10080/root/hello-world-app/hooks and create a WebHook for Push Events with the URL http://\<IpOfHostMachine\>:8090/git/notifyCommit?url=http://\<IpOfHostMachine\>:10080/root/hello-world-app.git
+- do the same for the project 'hello-world-app-acceptance'
 
 ````bash
 ./2createHelloWorldAppAndCommitToGitLab.sh
@@ -44,4 +47,21 @@ Configure Jenkins and Jenkins Job:
 - Press 'Build Now'
   - After the build has finished, you should find the created image in your local docker registry. Verify this by calling http://localhost:5000/v2/_catalog in your browser or take a look into the ~/docker-registry-data folder. 
 
-After a commit, Jenkins should build an image with the hello-world-app and pushed the image to your local docker registry. You should see the image when .
+## Acceptance Test Stage
+
+After the docker image has been created in the Commit Stage, we'll run acceptance tests against the docker image.
+- First of all, install "Build Pipeline Plugin" in Jenkins. The plugin provides an overview over our dependent jobs and our continuous delivery pipeline.
+- Create Job 'hello-world-app-acceptance' in Jenkins
+	- Git URL: http://\<IpOfHostMachine\>:10080/root/hello-world-app-acceptance.git
+	- Build > Goals and options: "verify -Ddocker.host.address=\<IpOfHostMachine\>"
+	- Build Triggers > Poll SCM check 
+	- *Build after other project are built*: hello-world-app
+- Create Build Pipeline View and select "hello-world-app" as Start Project
+	- Create View and select "Build Pipeline View"
+	- Select Initial Job: "hello-world-app"
+- Open created Build Pipeline View
+	- Hit "Run" and you can see your project is going through the build pipeline consisting out of 2 stages. :-)
+
+
+
+

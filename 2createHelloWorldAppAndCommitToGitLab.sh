@@ -5,25 +5,41 @@
 echo "precondition: create project 'hello-world-app' in gitlab"
 echo "The default user is 'root' and the pw is shown above"
 
-PROJECTNAME=hello-world-app
 TARGETFOLDER=~/Development
-TARGETPATH=$TARGETFOLDER/$PROJECTNAME
 GITLAB_USER=root
 GITLAB_PW=12345678
 
-rm -fr $TARGETPATH
+createProjectAndCommitToGitLab(){
+	local projectName=$1
+	local targetPath=$TARGETFOLDER/$projectName
+	echo "=== $targetPath ==="
+	
+	rm -fr $targetPath
 
-git clone http://$GITLAB_USER:$GITLAB_PW@localhost:10080/root/hello-world-app.git $TARGETPATH
-git config user.name $GITLAB_USER #don't use --global!
-git config credential.helper cache #caches password for 15 min
+	echo "--- Cloning..."
+	git clone http://$GITLAB_USER:$GITLAB_PW@localhost:10080/root/$projectName.git $targetPath
+	git config user.name $GITLAB_USER #don't use --global!
+	git config credential.helper cache #caches password for 15 min
+	
+	echo "--- Copying..."
+	cp -r $projectName $TARGETFOLDER
+	rm -fr $targetPath/target
+	rm -fr $targetPath/.settings
+	rm -fr $targetPath/.classpath
+	rm -fr $targetPath/.project
+	
+	echo "--- Committing..."
+	local currentPath=`pwd`;
+	cd $targetPath
+	git add .
+	git commit -m "inital commit"
+	git push -u origin master
+	cd $currentPath
+}
 
-cp -r $PROJECTNAME $TARGETFOLDER
-rm -fr $TARGETPATH/target
-rm -fr $TARGETPATH/.settings
-rm -fr $TARGETPATH/.classpath
-rm -fr $TARGETPATH/.project
+createProjectAndCommitToGitLab hello-world-app
+createProjectAndCommitToGitLab hello-world-app-acceptance
 
-cd $TARGETPATH
-git add .
-git commit -m "inital commit"
-git push -u origin master
+
+
+
