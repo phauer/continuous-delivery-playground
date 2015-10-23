@@ -69,7 +69,7 @@ Finally, we want to run our built and tested docker image.
 - Build after other projects are built: hello-world-app-acceptance
 - Add build step: "Execute shell" and insert `./runDockerContainer.sh`
 
-Voila, that's it! We successfully set up an simple continuous delivery pipeline.
+Voila, that's it! We successfully set up a simple continuous delivery pipeline. Every time we push a change to our hello-world-app git project, the application goes through the whole pipeline and is finally deployed in "production". This way we get feedback quickly, increase the reliability of our delivery process and reduce the risk of releasing (due to automation).
 
 
 
