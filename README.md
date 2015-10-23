@@ -19,10 +19,10 @@ Configure GitLab Project
 - Open GitLab on  localhost:10080, login as root (password: 5iveL!fe), change password to 12345678
 - create project 'hello-world-app'.
 - go to http://localhost:10080/root/hello-world-app/hooks and create a WebHook for Push Events with the URL http://\<IpOfHostMachine\>:8090/git/notifyCommit?url=http://\<IpOfHostMachine\>:10080/root/hello-world-app.git
-- do the same for the project 'hello-world-app-acceptance'
+- do the same for the project 'hello-world-app-acceptance' and 'hello-world-app-deployment'
 
 ````bash
-./2createHelloWorldAppAndCommitToGitLab.sh
+./createProjectsAndCommitToGitLab.sh
 ````
 
 ````bash
@@ -61,6 +61,15 @@ After the docker image has been created in the Commit Stage, we'll run acceptanc
 - Open created Build Pipeline View
 	- Hit "Run" and you can see your project is going through the build pipeline consisting out of 2 stages. :-)
 
+## Deployment Stage
+
+Finally, we want to run our built and tested docker image.
+- Create a Jenkins Job "hello-world-app-deployment" as a Freestyle project
+- Git-URL: http://\<IpOfHostMachine\>:10080/root/hello-world-app-deployment.git
+- Build after other projects are built: hello-world-app-acceptance
+- Add build step: "Execute shell" and insert `./runDockerContainer.sh`
+
+Voila, that's it! We successfully set up an simple continuous delivery pipeline.
 
 
 

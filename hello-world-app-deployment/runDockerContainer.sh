@@ -2,7 +2,7 @@
 
 DOCKER_REPO=192.168.35.217:5000/hello-world-app
 TAG=0.0.1-SNAPSHOT
-CONTAINER_NAME=hello-world-app
+CONTAINER_NAME=hello-world-app-deployment
 
 containerId=`docker ps -qa --filter "name=$CONTAINER_NAME"`
 if [ -n "$containerId" ]
