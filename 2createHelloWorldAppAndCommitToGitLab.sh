@@ -39,6 +39,7 @@ createProjectAndCommitToGitLab(){
 
 createProjectAndCommitToGitLab hello-world-app
 createProjectAndCommitToGitLab hello-world-app-acceptance
+createProjectAndCommitToGitLab hello-world-app-deployment
 
 
 
